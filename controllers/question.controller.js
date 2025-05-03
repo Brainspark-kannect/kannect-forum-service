@@ -11,6 +11,29 @@ exports.createQuestion = async (req, res) => {
     if (!askedBy) {
       return sendErrorResponse(res, "User not found", "Not Found", 404);
     }
+    let fileUrls = [];
+
+    // Handle file uploads if files are provided
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const formData = new FormData();
+        formData.append("fileName", file.originalname);
+        formData.append("file", file.buffer);
+
+        const uploadResponse = await axios.post(
+          "http://localhost:8080/masters/file/upload",
+          formData,
+          {
+            headers: {
+              ...formData.getHeaders(),
+            },
+          }
+        );
+
+        fileUrls.push(uploadResponse.data.fileUrl); // Assuming the microservice returns the file URL
+      }
+    }
+
     const question = new Question({ title, description, askedBy, label });
     await question.save();
 

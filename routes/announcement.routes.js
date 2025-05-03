@@ -8,9 +8,10 @@ const {
 } = require("../controllers/announcement.controller");
 const protect = require("../middlewares/auth.middleware");
 const adminOnly = require("../middlewares/role.middleware");
+const upload = require("../middlewares/upload.middleware.js");
 
 // Create an announcement
-router.post("/" , protect, adminOnly, createAnnouncement);
+router.post("/" , protect, adminOnly,upload.single("file"), createAnnouncement);
 
 // Get all announcements
 router.get("/", protect,getAnnouncements)
