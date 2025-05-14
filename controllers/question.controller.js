@@ -30,11 +30,11 @@ exports.createQuestion = async (req, res) => {
           }
         );
 
-        fileUrls.push(uploadResponse.data.fileUrl); // Assuming the microservice returns the file URL
+        fileUrls.push(uploadResponse.data); // Assuming the microservice returns the file URL
       }
     }
-
-    const question = new Question({ title, description, askedBy, label });
+    const askedByName = `${req.user.firstname} ${req.user.lastname}`;
+    const question = new Question({ title, description, askedBy, label,fileUrls, askedByName });
     await question.save();
 
     return sendSuccessResponse(res, question, "Question posted successfully", 201);
@@ -56,7 +56,7 @@ exports.getQuestions = async (req, res) => {
     if (questions.length == 0) {
       return sendErrorResponse(res, "", "no matching question found", 404);
     }
-    return sendSuccessResponse(res, questions);
+    return sendSuccessResponse(res, questions, "Question posted successfully", 201);
   } catch (error) {
     return sendErrorResponse(res, error, "Failed to fetch questions");
   }
@@ -124,7 +124,14 @@ exports.getQuestionById = async (req, res) => {
     if (!question) {
       return sendErrorResponse(res, "Question not found", "Not Found", 404);
     }
-    return sendSuccessResponse(res, question, "Question fetched successfully", 200);  
+     // Add firstname and lastname from req.user to the response
+    const response = {
+      ...question.toObject(),
+      firstname: req.user.firstname,
+      lastname: req.user.lastname,
+    };
+
+    return sendSuccessResponse(res, response, "Question posted successfully", 200); 
   }
   catch (error) {
     return sendErrorResponse(res, error, "Failed to fetch question");
