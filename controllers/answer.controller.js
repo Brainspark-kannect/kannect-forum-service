@@ -19,7 +19,7 @@ exports.createAnswer = async (req, res) => {
     if (question.isAnnouncement) {
       return sendErrorResponse(res, "Announcements cannot be answered", "Forbidden", 403);
     }
-
+    let fileUrls = [];
         // Handle file uploads if files are provided
         if (req.files && req.files.length > 0) {
           for (const file of req.files) {
@@ -37,11 +37,11 @@ exports.createAnswer = async (req, res) => {
               }
             );
     
-            fileUrls.push(uploadResponse.data.fileUrl); // Assuming the microservice returns the file URL
+            fileUrls.push(uploadResponse.data); // Assuming the microservice returns the file URL
           }
         }
-
-    const answer = new Answer({ questionId, content, answeredBy });
+    const answeredByName = `${req.user.firstname} ${req.user.lastname}`;
+    const answer = new Answer({ questionId, content, answeredBy, answeredByName, fileUrls });
     await answer.save();
 
     sendSuccessResponse(res, answer, "Answer posted successfully", 201);

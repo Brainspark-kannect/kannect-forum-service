@@ -5,31 +5,34 @@ const { sendSuccessResponse, sendErrorResponse } = require("../utils/response");
 exports.createAnnouncement = async (req, res) => {
   try {
     const { title, description } = req.body;
-        // Handle file uploads if files are provided
-        if (req.files && req.files.length > 0) {
-          for (const file of req.files) {
-            const formData = new FormData();
-            formData.append("fileName", file.originalname);
-            formData.append("file", file.buffer);
-    
-            const uploadResponse = await axios.post(
-              "http://localhost:8080/masters/file/upload",
-              formData,
-              {
-                headers: {
-                  ...formData.getHeaders(),
-                },
-              }
-            );
-    
-            fileUrls.push(uploadResponse.data.fileUrl); // Assuming the microservice returns the file URL
+    // Handle file uploads if files are provided
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const formData = new FormData();
+        formData.append("fileName", file.originalname);
+        formData.append("file", file.buffer);
+
+        const uploadResponse = await axios.post(
+          "http://localhost:8080/masters/file/upload",
+          formData,
+          {
+            headers: {
+              ...formData.getHeaders(),
+            },
           }
-        }
+        );
+
+        fileUrls.push(uploadResponse.data.fileUrl); // Assuming the microservice returns the file URL
+      }
+    }
+    const askedBy = req.user.id;
+    const askedByName = `${req.user.firstname} ${req.user.lastname}`;
     const announcement = new Question({
       title,
       description,
-      askedBy: req.user.id, // Admin user ID
+      askedBy,
       isAnnouncement: true,
+      askedByName
     });
 
     await announcement.save();

@@ -27,7 +27,8 @@ const AnswerSchema = new mongoose.Schema(
     ],
     fileUrls:[
       {type:String}
-    ]
+    ],
+    answeredByName: {type: String},
   },
   {
     timestamps: true,
