@@ -33,7 +33,7 @@ exports.createQuestion = async (req, res) => {
         fileUrls.push(uploadResponse.data); // Assuming the microservice returns the file URL
       }
     }
-    const askedByName = `${req.user.firstname} ${req.user.lastname}`;
+    const askedByName = `${req.user.first_name} ${req.user.last_name}`;
     const question = new Question({ title, description, askedBy, label,fileUrls, askedByName });
     await question.save();
 
@@ -124,14 +124,7 @@ exports.getQuestionById = async (req, res) => {
     if (!question) {
       return sendErrorResponse(res, "Question not found", "Not Found", 404);
     }
-     // Add firstname and lastname from req.user to the response
-    const response = {
-      ...question.toObject(),
-      firstname: req.user.firstname,
-      lastname: req.user.lastname,
-    };
-
-    return sendSuccessResponse(res, response, "Question posted successfully", 200); 
+    return sendSuccessResponse(res, question, "Question posted successfully", 200); 
   }
   catch (error) {
     return sendErrorResponse(res, error, "Failed to fetch question");
