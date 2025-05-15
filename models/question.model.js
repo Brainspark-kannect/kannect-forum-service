@@ -22,6 +22,10 @@ const QuestionSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    fileUrls:[
+      {type:String}
+    ],
+    askedByName: {type: String},
   },
   {
     timestamps: true,
