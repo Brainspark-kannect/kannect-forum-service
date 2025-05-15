@@ -10,7 +10,7 @@ const sendErrorResponse = (res, error, message = "Something went wrong", statusC
   return res.status(statusCode).json({
     success: false,
     message,
-    error: error.message || error,
+    error: error ? (error.message || error) : null,
   });
 };
 

@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const sendmail = async (recipients, cc, subject, body) => {
+const sendmail = async (to, cc, subject, body) => {
   try {
     // Create a transporter
     const transporter = nodemailer.createTransport({
@@ -14,11 +14,15 @@ const sendmail = async (recipients, cc, subject, body) => {
     // Email options
     const mailOptions = {
       from: `"${process.env.COMPANY_NAME}" <${process.env.EMAIL_USER}>`, // Add company name
-      to: recipients.join(","), // List of recipients
-      cc: cc.join(","), // List of CC
+      to: Array.isArray(to) ? to.join(",") : to, // Handle both string and array
       subject: subject, // Subject line
       html: body, // Email body (HTML format)
     };
+
+    // Only add CC if it exists and is not empty
+    if (cc && (Array.isArray(cc) ? cc.length > 0 : cc.trim() !== "")) {
+      mailOptions.cc = Array.isArray(cc) ? cc.join(",") : cc;
+    }
 
     // Send email
     await transporter.sendMail(mailOptions);
