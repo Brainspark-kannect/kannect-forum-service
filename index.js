@@ -24,12 +24,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // routes
-app.use("/api/v1/questions", questionRoutes);
-app.use("/api/v1/answers", answerRoutes);
-app.use("/api/v1/announcements", announcementRoutes);
-app.use("/api/v1/email", emailRoutes);
+app.use("/forum/api/v1/questions", questionRoutes);
+app.use("/forum/api/v1/answers", answerRoutes);
+app.use("/forum/api/v1/announcements", announcementRoutes);
+app.use("/forum/email", emailRoutes);
 //just for connecting to postgress
-app.use("/api/v1/user",userRoutes);
+app.use("/forum/api/v1/user", userRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

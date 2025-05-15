@@ -1,0 +1,492 @@
+{
+	"info": {
+		"_postman_id": "random-uuid",
+		"name": "Forum-Service",
+		"description": "Collection for Forum Service API endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Questions",
+			"item": [
+				{
+					"name": "Create Question",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Your question title",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Your question description",
+									"type": "text"
+								},
+								{
+									"key": "label",
+									"value": "question-label",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/questions",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "questions"]
+						}
+					}
+				},
+				{
+					"name": "Get All Questions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/questions?label=example-label",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "questions"],
+							"query": [
+								{
+									"key": "label",
+									"value": "example-label",
+									"description": "Optional label filter"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Question By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/questions/:id",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "questions", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "Question ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Edit Question",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated title\",\n    \"description\": \"Updated description\",\n    \"label\": \"updated-label\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/questions/:id",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "questions", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "Question ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Question",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/questions/:id",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "questions", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "Question ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Question With Answers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/questions/:id/answers",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "questions", ":id", "answers"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "Question ID"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Answers",
+			"item": [
+				{
+					"name": "Create Answer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "questionId",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "Your answer content",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/answers",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "answers"]
+						}
+					}
+				},
+				{
+					"name": "Get Answers by Question ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/answers/:id",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "answers", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "Question ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Upvote Answer",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/answers/:id/upvote",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "answers", ":id", "upvote"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "Answer ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Downvote Answer",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/answers/:id/downvote",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "answers", ":id", "downvote"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "Answer ID"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Announcements",
+			"item": [
+				{
+					"name": "Create Announcement",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Announcement title",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Announcement description",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/announcements",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "announcements"]
+						}
+					}
+				},
+				{
+					"name": "Get All Announcements",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/announcements",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "announcements"]
+						}
+					}
+				},
+				{
+					"name": "Edit Announcement",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated announcement title\",\n    \"description\": \"Updated announcement description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/announcements/:id",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "announcements", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "Announcement ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Announcement",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/announcements/:id",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "announcements", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "",
+									"description": "Announcement ID"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Email",
+			"item": [
+				{
+					"name": "Send Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"recipients\": [\"recipient@example.com\"],\n    \"cc\": [\"cc@example.com\"],\n    \"subject\": \"Email subject\",\n    \"body\": \"Email body content\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/forum/email/send",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "email", "send"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"your_password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/forum/api/v1/user/login",
+							"host": ["{{base_url}}"],
+							"path": ["forum", "api", "v1", "user", "login"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000"
+		},
+		{
+			"key": "token",
+			"value": "your_jwt_token_here"
+		}
+	]
+} 

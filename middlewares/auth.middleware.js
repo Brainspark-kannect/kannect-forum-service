@@ -34,7 +34,8 @@ const protect = async (req, res, next) => {
       return sendErrorResponse(res, 404, 'User not found');
     }
 
-    req.user = userResult.rows[0]; // Attach user to request
+    req.user = userResult.rows[0]; 
+    console.log(req.user);// Attach user to request
     next();
 
   } catch (error) {
